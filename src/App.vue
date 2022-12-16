@@ -1,6 +1,7 @@
 <script setup>
 import Formik from "./components/Formik.vue";
 import Field from "./components/Field.vue";
+import Captcha from "./components/Captcha.vue";
 
 // A function to submit the form data
 const onSubmit = (formData) => {
@@ -30,6 +31,11 @@ const validate = (formData) => {
   // Return the errors object
   return errors;
 };
+
+const options = Array.from({ length: 9 }, (_, i) => ({
+  id: i,
+  href: `https://picsum.photos/200?random=${i}`,
+}));
 </script>
 
 <template>
@@ -43,6 +49,7 @@ const validate = (formData) => {
         <Field type="email" :name="'email'" />
         <Field type="password" :name="'password'" />
         <Field as="textarea" :name="'message'" />
+        <Field :as="Captcha" name="captcha" :options="options" />
 
         <button type="submit" :disabled="isSubmitting">Submit</button>
 
