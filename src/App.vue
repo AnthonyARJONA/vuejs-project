@@ -2,19 +2,21 @@
 import Formik from "./components/Formik.vue";
 import Field from "./components/Field.vue";
 
+// A function to submit the form data
 const onSubmit = (formData) => {
   alert("Form submitted. Data : " + JSON.stringify(formData));
 };
 
-// Define initial values for the form
+// The initial values for the form fields
 const initialValues = {
   email: '',
   password: '',
   message: ''
 };
 
-// Define validation function
+// A function to validate the form data
 const validate = (formData) => {
+  // An object to store the errors
   const errors = {};
   if (formData.email.length < 6) {
     errors["email"] = "Email is too short";
@@ -25,6 +27,7 @@ const validate = (formData) => {
   if (formData.message.length < 3) {
     errors["message"] = "Message is too short";
   }
+  // Return the errors object
   return errors;
 };
 </script>
