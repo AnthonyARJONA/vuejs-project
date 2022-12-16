@@ -1,0 +1,75 @@
+body {
+    /* Set the background color to a light blue */
+    background-color: lightblue;
+    /* Add some padding to the body */
+    padding: 20px;
+
+    font-family: sans-serif;
+}
+
+form {
+    /* Set the background color to white */
+    background-color: white;
+    /* Add some padding and a border to the form */
+    padding: 20px;
+    padding-right: 35px;
+    border: 1px solid black;
+    /* Set the width of the form to 50% of the window */
+    width: 50%;
+    /* Center the form horizontally and vertically on the page */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Add some rounding to the corners of the form */
+    border-radius: 10px;
+    width: 30%;
+}
+
+input {
+    /* Add some padding and a border to the input */
+    padding: 8px;
+    border: 1px solid black;
+    /* Set the width of the input to 100% */
+    width: 100%;
+    /* Add some margin to the input */
+    margin-bottom: 20px;
+    /* Add some rounding to the corners of the input */
+    border-radius: 5px;
+}
+
+textarea {
+    /* Add some padding and a border to the textarea */
+    border: 1px solid black;
+    /* Set the width of the textarea to 100% */
+    width: 100%;
+    /* Add some margin to the textarea */
+    margin-bottom: 20px;
+    /* Add some rounding to the corners of the textarea */
+    border-radius: 5px;
+}
+
+button {
+    /* Add some padding and a border to the button */
+    padding: 8px;
+    border: 1px solid black;
+    /* Add some rounding to the corners of the button */
+    border-radius: 5px;
+    /* Set the background color of the button to a light green */
+    background-color: rgb(77, 160, 77);
+    /* Change the text color of the button to white */
+    color: white;
+    /* Add a hover effect to the button */
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button:hover {
+    /* Change the background color of the button to a dark green on hover */
+    background-color: darkgreen;
+}
+
+h1 {
+    /* Center the h1 element on the page */
+    text-align: center;
+}

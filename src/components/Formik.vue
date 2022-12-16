@@ -1,50 +1,53 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-    <slot :values="values" :errors="errors" :isSubmitting="isSubmitting" />
-  </form>
+  <slot :data="formData" :error="error" :isSubmitting="isSubmitting" :handleSubmit="submitMethod" />
 </template>
 
-<script>
-import { ref } from 'vue';
-export default {
-  props: {
-    name: {
-      type: String,
-      required: true
-    },
-    type: {
-      type: String,
-      default: 'text'
-    },
-    initialValues: {
-      type: Object,
-      required: false
-    },
-    validate: {
-      type: Function,
-      required: false
-    },
-    onSubmit: {
-      type: Function,
-      required: true
-    }
-  },
-  
-  setup(props, { emit }) {
-    const values = ref(props.initialValues);
-    const errors = ref({});
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      emit('onSubmit', e.target.value);
-    };
-    const isSubmitting = ref(false);
+<script setup>
+import { ref, defineProps, provide, onMounted } from 'vue';
 
-    return {
-      values,
-      errors,
-      handleSubmit,
-      isSubmitting
-    };
+const props = defineProps({
+  onSubmit: {
+    type: Function,
+    required: true,
+  },
+  initialValues: {
+    type: Object,
+    required: false,
+  },
+  validate: {
+    type: Function,
+    required: false,
   }
-}
+});
+
+const formData = ref(props.initialValues);
+
+onMounted(() => {
+  if (props.initialValues) {
+    for (const item in props.initialValues) {
+      formSetData(props.initialValues[item], item);
+    }
+  }
+});
+
+const submitMethod = () => {
+  error.value = props.validate(formData.value);
+  if (Object.keys(error.value).length === 0) {
+    isSubmitting.value = true;
+    props.onSubmit(formData.value);
+  }
+};
+
+const formSetData = (newData, fieldName) => {
+  formData.value[fieldName] = newData;
+};
+
+const error = ref([]);
+const isSubmitting = ref(false);
+
+provide("formikProvider", {
+  formSetData,
+  formData,
+});
+
 </script>

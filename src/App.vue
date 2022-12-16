@@ -1,31 +1,52 @@
 <script setup>
 import Formik from "./components/Formik.vue";
 import Field from "./components/Field.vue";
-import { ref } from "vue";
 
-let email     = ref('monsuperemail@gmail.com');
-let password  = ref('monsuperpassword');
-let message   = ref('');
+const onSubmit = (formData) => {
+  alert("Form submitted. Data : " + JSON.stringify(formData));
+};
+
+// Define initial values for the form
+const initialValues = {
+  email: '',
+  password: '',
+  message: ''
+};
+
+// Define validation function
+const validate = (formData) => {
+  const errors = {};
+  if (formData.email.length < 6) {
+    errors["email"] = "Email is too short";
+  }
+  if (formData.password.length < 6) {
+    errors["password"] = "Password is too short";
+  }
+  if (formData.message.length < 3) {
+    errors["message"] = "Message is too short";
+  }
+  return errors;
+};
 </script>
 
 <template>
   <div>
-    <Formik 
-      :initialValues="{ email, password }"
-      :validate="validate"
-      @onSubmit="handleSubmit"
-    >
-      <Field name="email" :value="email" type="email" as="input"/>
-      <Field name="password" type="password" as="input" />
-      <Field name="message" as="textarea" />
 
-      <button type="submit" :disabled="submitting">Submit</button>
+    <Formik :initialValues="initialValues" :validate="validate" :onSubmit="onSubmit"
+      v-slot="{ error, handleSubmit, isSubmitting }">
+      <form @submit.prevent="handleSubmit">
+        <h1>Formik Form</h1>
+
+        <Field type="email" :name="'email'" />
+        <Field type="password" :name="'password'" />
+        <Field as="textarea" :name="'message'" />
+
+        <button type="submit" :disabled="isSubmitting">Submit</button>
+
+        <div v-for="err in error">
+          <p>{{ err }}</p>
+        </div>
+      </form>
     </Formik>
   </div>
 </template>
-
-<script>
-const handleSubmit = () => {
-  console.log('submit', email.value, password.value, message.value);
-};
-</script>
